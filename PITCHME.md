@@ -40,4 +40,5 @@
 
 ## 设计模式
 
-![book](https://images-na.ssl-images-amazon.com/images/I/81gtKoapHFL.jpg)
+<img src="https://images-na.ssl-images-amazon.com/images/I/81gtKoapHFL.jpg" alt="GoF book" style="width: 200px;"/>
+
