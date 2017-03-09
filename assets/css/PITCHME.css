@@ -1,3 +1,17 @@
 .reveal {
     font-size: 30px;
 }
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal .slides section>* {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.reveal section img {
+    border: 0;
+    box-shadow: none;
+}
