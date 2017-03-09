@@ -1,8 +1,21 @@
+
 # 面向对象设计原则
 
 ❓有哪写面向对象编程的概念
 
-#HSLIDE
++++
+# 标题
+## 标题
+### 标题
+#### 标题
+##### 标题
+###### 标题
+
+很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的正文
+
+> 很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的引用
+
+---
 
 ## 面向对象术语
 
@@ -18,24 +31,24 @@
 继承的问题
 -->
 
-#HSLIDE
+---
 
-应对变化和复杂
+# 应对变化和复杂
 
-#HSLIDE
+---
 
 # 高内聚&低耦合
 
-**内聚**是一个系统里两个或多个部分一起执行工作的度量，来获得比每个部分单独工作获得更好的结果。
+**内聚**是一个系统里两个或多个部分一起执行工作的度量，来获得比每个部分单独工作获得更好的结果。  
 **耦合**是一个类、方法或者任何一个实体直接与另一个实体连接的度
 
-#HSLIDE
+---
 
 # SOLID原则
 
 ✨[一些软件设计的原则](http://coolshell.cn/articles/4535.html)
 
-#VSLIDE
++++
 
 ## 单一职责原则(Single Responsibility)
 
@@ -45,7 +58,7 @@
 代码重复，不同“方向”的变化
 -->
 
-#VSLIDE
++++
 
 ## 开闭原则(Open/Close)
 
@@ -55,7 +68,7 @@
 面向接口编程，组合由于继承(LSP)
 -->
 
-#VSLIDE
++++
 
 ## 里氏替换原则(Liskov's Substitution)
 
@@ -65,20 +78,20 @@
 继承关系的开闭原则，契约
 -->
 
-#VSLIDE
++++
 
 ## 接口隔离原则(Interface Segregation)
 
 客户不应该被强迫依赖它用不上的方法
 
-#VSLIDE
++++
 
 ## 依赖倒置原则(Dependency Inversion)
 
 A. 上层模块不应该依赖下层模块，两者之间应该依赖抽象而不是具体实现
 B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
-#HSLIDE
+---?http://www.vincehuston.org/images/GoF_full_medium.png
 
 ## 设计模式
 
@@ -87,45 +100,45 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 * 结构型模式
 * 架构模式
 
-#HSLIDE
+---
 
 ## 创建型模式
 
-#VSLIDE
++++
 
 ## 单例模式
 
 ![uml](https://www.tutorialspoint.com/design_pattern/images/singleton_pattern_uml_diagram.jpg)
 
 
-#VSLIDE
++++
 
 ## 工厂模式
 
 ![uml](https://www.tutorialspoint.com/design_pattern/images/factory_pattern_uml_diagram.jpg)
 
-#VSLIDE
++++
 
 ## 抽象工厂模式
 ![uml](https://www.tutorialspoint.com/design_pattern/images/abstractfactory_pattern_uml_diagram.jpg)
 
-#VSLIDE
++++
 
 ## 建造者模式
 
 ![uml](https://www.tutorialspoint.com/design_pattern/images/builder_pattern_uml_diagram.jpg)
 
-#VSLIDE
++++
 
 ## 原型模式
 
 ![uml](https://www.tutorialspoint.com/design_pattern/images/prototype_pattern_uml_diagram.jpg)
 
-#VSLIDE
++++
 
 
 
-#VSLIDE
++++
 
 ## 依赖注入
 
