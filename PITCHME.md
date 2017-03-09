@@ -96,7 +96,7 @@ methods of a member object returned by another method.
 
 ## 创建型模式
 
-#VSLDIE
+#VSLIDE
 
 ## 单例模式
 
@@ -104,10 +104,31 @@ methods of a member object returned by another method.
 
 ## 工厂模式
 
-#VSLDIE
+![uml](https://www.tutorialspoint.com/design_pattern/images/factory_pattern_uml_diagram.jpg)
 
-## 构造模式
+#VSLIDE
 
-#HSILDE
+## 抽象工厂模式
+![uml](https://www.tutorialspoint.com/design_pattern/images/abstractfactory_pattern_uml_diagram.jpg)
+
+#VSLIDE
+
+## 建造者模式
+
+![uml](https://www.tutorialspoint.com/design_pattern/images/builder_pattern_uml_diagram.jpg)
+
+#VSLIDE
+
+## 原型模式
+
+![uml](https://www.tutorialspoint.com/design_pattern/images/prototype_pattern_uml_diagram.jpg)
+
+#VSLIDE
+
+##单例模式
+
+![uml](https://www.tutorialspoint.com/design_pattern/images/singleton_pattern_uml_diagram.jpg)
+
+#HSLIDE
 
 ## 依赖注入
