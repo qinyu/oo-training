@@ -52,11 +52,11 @@
 
 #VSLIDE
 
-## I?P接口隔离原则
+## ISP接口隔离原则
 
 #VSLIDE
 
-## DP依赖倒置原则
+## DIP依赖倒置原则
 
 #HSLIDE
 
