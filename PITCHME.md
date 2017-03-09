@@ -11,6 +11,10 @@
 
 > 重要程度如何排序？
 
+<!--
+封装->委托->继承
+-->
+
 #HSLIDE
 
 ## 信息加工能力的局限
@@ -77,7 +81,33 @@ methods of a member object returned by another method.
 
 ```
 
+#HSLIDE
+
 ## 设计模式
 
 <img src="https://images-na.ssl-images-amazon.com/images/I/81gtKoapHFL.jpg" alt="GoF book" style="width: 200px;"/>
 
+* 创建型模式
+* 行为型模式
+* 结构型模式
+* 架构模式
+
+#HSLIDE
+
+## 创建型模式
+
+#VSLDIE
+
+## 单例模式
+
+#VSLIDE
+
+## 工厂模式
+
+#VSLDIE
+
+## 构造模式
+
+#HSILDE
+
+## 依赖注入
