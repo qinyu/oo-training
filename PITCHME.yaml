@@ -1,3 +1,3 @@
 footnote : "© 2017 ThoughtWorks Inc."
-theme : black
-highlight : ir-black
+#theme : black
+#highlight : ir-black
