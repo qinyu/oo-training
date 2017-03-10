@@ -46,7 +46,9 @@
 ---
 
 # SOLID原则 
-
+[《敏捷软件开发 原则、模式与实践》](https://book.douban.com/subject/1140457/)  
+![book_cover](https://img3.doubanio.com/lpic/s1671095.jpg)  
+作者: Robert C. Martin   
 [✨一些软件设计的原则](http://coolshell.cn/articles/4535.html) <!-- .element: class="fragment" -->
 
 +++
@@ -95,19 +97,17 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 ---
 
 ## 设计模式
-
----
-
-## 设计模式
 [《设计模式：可复用面向对象软件的基础》](https://zh.wikipedia.org/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%8F%AF%E5%A4%8D%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%9F%BA%E7%A1%80)  
 ![book_cover](https://upload.wikimedia.org/wikipedia/en/7/78/Design_Patterns_cover.jpg)  
-作者(GoF): Gamma Erich Helm Richard Johnson Ralph Vlissides John.
+作者(GoF): Gamma Erich, Helm Richard, Johnson Ralph, Vlissides John.
 
 ---
 
 ## 设计模式分类
 
-![](http://www.vincehuston.org/images/GoF_full_medium.png)
+![](http://www.vincehuston.org/images/GoF_full_medium.png)  
+
+**创建型模式**<!-- .element: class="fragment" --> **行为型模式**<!-- .element: class="fragment" --> **结构型模式**<!-- .element: class="fragment" --> **架构模式**<!-- .element: class="fragment" -->
 
 ---
 
