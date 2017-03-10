@@ -97,8 +97,8 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 ---
 
 ## 设计模式
-[《设计模式：可复用面向对象软件的基础》](https://zh.wikipedia.org/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%8F%AF%E5%A4%8D%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%9F%BA%E7%A1%80)  
-![book_cover](https://upload.wikimedia.org/wikipedia/en/7/78/Design_Patterns_cover.jpg)     
+[《设计模式：可复用面向对象软件的基础》](https://book.douban.com/subject/1052241/)  
+![book_cover](https://img3.doubanio.com/lpic/s1074361.jpg)     
 作者(GoF): Gamma Erich, Helm Richard, Johnson Ralph, Vlissides John.
 
 ---
@@ -153,7 +153,7 @@ public class ToolManager {
 
 +++
 
-## 最短的线程安全实现
+## 最短的线程安全的实现
 ```java
 public class InstanceFactory {
     private static class InstanceHolder {
@@ -166,16 +166,16 @@ public class InstanceFactory {
 }
 ```
 
-## 单例模式的问题
+## 运用
 
 [👿为什么单例模式是邪恶的](http://www.cnblogs.com/nomoneynowife/p/3719031.html)  <!-- .element: class="fragment" -->
-* 和全局变量没什么区别 <!-- .element: class="fragment" -->
-* 即负责创建逻辑也限制创建的数量，违反SRP <!-- .element: class="fragment" --> 
+* 和全局变量没什么区别<!-- .element: class="fragment" --> 可能导致内存泄漏 <!-- .element: class="fragment" -->   
+* 即负责创建逻辑也限制创建的数量，违反SRP<!-- .element: class="fragment" --> 
 <!--工厂模式与建造者模式不违反SRP-->
-* 紧耦合，违反OCP，无法在测试时方便的替换 <!-- .element: class="fragment" -->
-* 无法判断当前的状态，测试无法独立运行 <!-- .element: class="fragment" -->
+* 调用的地方紧耦合，违反OCP<!-- .element: class="fragment" --> 无法在测试时方便的替换 <!-- .element: class="fragment" -->
+* 全局状态处于未知状态<!-- .element: class="fragment" --> 测试无法独立运行 <!-- .element: class="fragment" -->
 
-✨仔细分析上下文，确定无上诉设计的需要; 或者改用其他设计模式 <!-- .element: class="fragment" -->
+✨仔细分析上下文，确定无上诉设计的需要(确定是全局仅需要一个实例); 或者改用其他设计模式 <!-- .element: class="fragment" -->
 ---
 
 ## 工厂模式
@@ -195,18 +195,20 @@ public class InstanceFactory {
 
 +++
 
-## 👎[望远镜构造函数](http://codethataint.com/blog/telescoping-constructor-pattern-java/)
+## 👎[伸缩套管式构造函数](http://codethataint.com/blog/telescoping-constructor-pattern-java/)
 ```java
 Pizza(int size) { ... }        
 Pizza(int size, boolean cheese) { ... }    
 Pizza(int size, boolean cheese, boolean pepperoni) { ... }    
 Pizza(int size, boolean cheese, boolean pepperoni, boolean bacon) { ... }
 ```
-
-+++
-
-## 👎解决方法
-
+#### 👎解决方法之一
+```java
+Pizza pizza = new Pizza(12);
+pizza.setCheese(true);
+pizza.setPepperoni(true);
+pizza.setBacon(true);
+```
 +++
 
 ## 👍解决方法(建造者)
@@ -256,6 +258,7 @@ Pizza pizza = new Pizza.Builder(12)
 ```
 ## 运用
 
+- Android: [ShareCompat.IntentBuilder](https://developer.android.com/reference/android/support/v4/app/ShareCompat.IntentBuilder.html) [NotificationCompat.Builder](https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html)
 - IDE支持：https://www.jetbrains.com/help/idea/2016.3/replace-constructor-with-builder.html
 +++
 
