@@ -98,7 +98,7 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
 ## 设计模式
 [《设计模式：可复用面向对象软件的基础》](https://book.douban.com/subject/1052241/)  
-![book_cover](https://img3.doubanio.com/lpic/s1074361.jpg)     
+<img src="https://img3.doubanio.com/lpic/s1074361.jpg" style="width: 300px;"/>     
 作者(GoF): Gamma Erich, Helm Richard, Johnson Ralph, Vlissides John.
 
 ---
@@ -118,7 +118,6 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 * 抽象工厂模式
 * 建造者模式
 * 原型模式
-* 依赖注入模式
 
 ---
 
@@ -185,16 +184,27 @@ public class InstanceFactory {
 
 ## 实现(待续)
 ```java
-public class SimplePizzaFactory {
-public Pizza createPizza(String type) {
-Pizza pizza = null;
-if (type.equals(“cheese”)) { pizza = new CheesePizza();
-} else if (type.equals(“pepperoni”)) { pizza = new PepperoniPizza();
-} else if (type.equals(“clam”)) {
-pizza = new ClamPizza();
-} else if (type.equals(“veggie”)) {
-pizza = new VeggiePizza(); }
- return pizza; }
+interface Door {
+    public float getWidth();
+    public float getHeight();
+}
+
+class WoodenDoor implements Door {
+    protected float width;
+    protected float height;
+
+    public WoodenDoor(float width, float height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public float getWidth() {
+        return this.width;
+    }
+
+    public float getHeight() {
+        return this.height;
+    }
 }
 ```
 
@@ -202,32 +212,31 @@ pizza = new VeggiePizza(); }
 
 ## 实现(完)
 ```java
-public class SimplePizzaFactory {
-    SimplePizzaFactory factory;
-    public PizzaStore(SimplePizzaFactory factory) { this.factory = factory; }
-    public Pizza createPizza(String type) {
-        Pizza pizza = null;
-        if (type.equals(“cheese”)) { pizza = new CheesePizza(); }
-        else if (type.equals(“pepperoni”)) { pizza = new PepperoniPizza(); }
-        else if (type.equals(“clam”)) { pizza = new ClamPizza(); } else if (type.equals(“veggie”)) { pizza = new VeggiePizza(); }
-        return pizza;
-    }
+class DoorFactory {
+   public static Door makeDoor(width, height) {
+       return new WoodenDoor(width, height);
+   }
 }
+Door door = DoorFactory.makeDoor(100, 200);
 ```
 
-## 支持
++++
 
-IDE: https://www.jetbrains.com/help/idea/2016.3/replace-constructor-with-factory-method.html
+## 运用
+
+创建接口的实例，隐藏具体的接口实现
+
+IDE重构: https://www.jetbrains.com/help/idea/2016.3/replace-constructor-with-factory-method.html
 
 ---
 
 # 工厂方法模式
 
-提供了一个把生成逻辑移交给子类的方法。
+把生成逻辑移交给子类
 
 +++
 
-## 实现
+## 实现(待续)
 
 ```java
 interface Interviewer {
@@ -247,6 +256,57 @@ public class CommunityExecutive implements Interviewer {
 }
 ```
 
++++
+
+## 实现(待续)
+
+```java
+public abstract class HiringManager {
+
+    // 工厂方法(抽象)
+    abstract public Interviewer makeInterviewer();
+
+    public void takeInterview() {
+        Interviewer interviewer = this.makeInterviewer();
+        interviewer.askQuestions();
+    }
+}
+```
++++
+
+
+## 实现(待续)
+
+```java
+public class DevelopmentManager extends HiringManager {
+    public Interviewer makeInterviewer() {
+        return new Developer();
+    }
+}
+
+public class MarketingManager extends HiringManager {
+    public Interviewer makeInterviewer() {
+        return new CommunityExecutive();
+    }
+}
+```
+
+## 实现(完)
+
+```java
+DevelopmentManager devManager = new DevelopmentManager();
+devManager.takeInterview(); // 输出: Asking about design patterns
+
+MarketingManager marketingManager = new MarketingManager();
+marketingManager.takeInterview(); // 输出: Asking about community building.
+
+```
++++
+
+## 运用
+
+工厂本身也是抽象的
+
 ---
 
 # 抽象工厂模式
@@ -257,61 +317,106 @@ public class CommunityExecutive implements Interviewer {
 
 ## 实现(待续)
 ```java
-public interface Shape {
-   void draw();
+interface Door {
+    public void getDescription();
 }
-public class Rectangle implements Shape {
-   @Override
-   public void draw() {
-      System.out.println("Inside Rectangle::draw() method.");
-   }
-}
-public class Square implements Shape {
 
-   @Override
-   public void draw() {
-      System.out.println("Inside Square::draw() method.");
-   }
+public class WoodenDoor implements Door {
+    public void getDescription() {
+        System.out.println("I am a wooden door");
+    }
+}
+
+class IronDoor implements Door {
+    public void getDescription() {
+        System.out.println("I am an iron door");
+    }
 }
 ```
+
 +++
 
 ## 实现(待续)
 ```java
-public interface Color {
-   void fill();
+interface DoorFittingExpert {
+    public void getDescription();
 }
-public class Red implements Color {
 
-   @Override
-   public void fill() {
-      System.out.println("Inside Red::fill() method.");
-   }
+class Welder implements DoorFittingExpert {
+    public void getDescription() {
+        System.out.println("I can only fit iron doors");
+    }
 }
-public class Green implements Color {
 
-   @Override
-   public void fill() {
-      System.out.println("Inside Green::fill() method.");
-   }
-}
-public class Blue implements Color {
-
-   @Override
-   public void fill() {
-      System.out.println("Inside Blue::fill() method.");
-   }
+class Carpenter implements DoorFittingExpert {
+    public void getDescription() {
+        System.out.println("I can only fit wooden doors");
+    }
 }
 ```
+
++++
+
+## 实现(待续)
+
+```java
+interface DoorFactory {
+    public Door makeDoor();
+    public DoorFittingExpert makeFittingExpert();
+}
+
+// 木头工厂返回木门和木匠
+class WoodenDoorFactory implements DoorFactory {
+    public Door makeDoor() {
+        return new WoodenDoor();
+    }
+
+    public DoorFittingExpert makeFittingExpert() {
+        return new Carpenter();
+    }
+}
+
+// 铁门工厂返回铁门和对应安装专家
+class IronDoorFactory implements DoorFactory {
+    public Door makeDoor() {
+        return new IronDoor();
+    }
+
+    public DoorFittingExpert makeFittingExpert() {
+        return new Welder();
+    }
+}
+```
+
++++
 
 ## 实现(完)
 
 ```java
-public abstract class AbstractFactory {
-   abstract Color getColor(String color);
-   abstract Shape getShape(String shape) ;
-}
+DoorFactory woodenFactory = new WoodenDoorFactory();
+
+Door door = woodenFactory。makeDoor();
+DoorFittingExpert expert = woodenFactory.makeFittingExpert();
+
+door.getDescription();  // 输出: I am a wooden door
+expert.getDescription(); // 输出: I can only fit wooden doors
+
+// 铁门工厂也一样
+DoorFactory ironFactory = new IronDoorFactory();
+
+Door door = ironFactory.makeDoor();
+DoorFittingExpert expert = ironFactory.makeFittingExpert();
+
+door.getDescription();  // 输出: I am an iron door
+expert.getDescription(); // 输出: I can only fit iron doors
+
 ```
+
++++
+
+## 运用
+
+有一组相关的对象需要相继创建
 
 ---
 
@@ -475,5 +580,7 @@ public class BaseBundle {
 
 +++
 
-## 依赖注入
+运用
+
+
 
