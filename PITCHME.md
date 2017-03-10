@@ -138,7 +138,7 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
 +++
 
-## [望远镜构造函数](http://codethataint.com/blog/telescoping-constructor-pattern-java/)
+## 👎[望远镜构造函数](http://codethataint.com/blog/telescoping-constructor-pattern-java/)
 ```java
 Pizza(int size) { ... }        
 Pizza(int size, boolean cheese) { ... }    
@@ -147,10 +147,50 @@ Pizza(int size, boolean cheese, boolean pepperoni, boolean bacon) { ... }
 ```
 
 +++
-## 解决方法
+
+## 👎解决方法
+
 +++
-## 解决方法二
-```
+
+## 👍解决方法(建造者)
+```java
+public class Pizza {
+  private int size;
+  private boolean cheese;
+  private boolean pepperoni;
+  private boolean bacon;
+ 
+  public static class Builder {
+    //required
+    private final int size;
+ 
+    //optional
+    private boolean cheese = false;
+    private boolean pepperoni = false;
+    private boolean bacon = false;
+ 
+    public Builder(int size) {
+      this.size = size;
+    }
+ 
+    public Builder cheese(boolean value) {
+      cheese = value;
+      return this;
+    }
+    ...
+    public Pizza build() {
+      return new Pizza(this);
+    }
+  }
+ 
+  private Pizza(Builder builder) {
+    size = builder.size;
+    cheese = builder.cheese;
+    pepperoni = builder.pepperoni;
+    bacon = builder.bacon;
+  }
+}
+...
 Pizza pizza = new Pizza.Builder(12)
                        .cheese(true)
                        .pepperoni(true)
@@ -159,7 +199,7 @@ Pizza pizza = new Pizza.Builder(12)
 ```
 ## 运用
 
-
+- IDE支持：https://www.jetbrains.com/help/idea/2016.3/replace-constructor-with-builder.html
 +++
 
 ## 
