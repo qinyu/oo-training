@@ -46,8 +46,8 @@
 ---
 
 # SOLID原则 
-[《敏捷软件开发 原则、模式与实践》](https://book.douban.com/subject/1140457/)    
-![book_cover](https://img3.doubanio.com/lpic/s1671095.jpg)    
+[《敏捷软件开发 原则、模式与实践》](https://book.douban.com/subject/1140457/)     
+<img src="https://img3.doubanio.com/lpic/s1671095.jpg" style="width: 250px;"/>    
 作者: Robert C. Martin   
 [✨一些软件设计的原则](http://coolshell.cn/articles/4535.html) <!-- .element: class="fragment" -->
 
@@ -98,7 +98,7 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
 ## 设计模式
 [《设计模式：可复用面向对象软件的基础》](https://book.douban.com/subject/1052241/)  
-<img src="https://img3.doubanio.com/lpic/s1074361.jpg" style="width: 300px;"/>     
+<img src="https://img3.doubanio.com/lpic/s1074361.jpg" style="width: 250px;"/>     
 作者(GoF): Gamma Erich, Helm Richard, Johnson Ralph, Vlissides John.
 
 ---
