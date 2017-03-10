@@ -47,8 +47,7 @@
 
 # SOLID原则 
 
-✨一些软件设计的原则 <!-- .element: class="fragment" -->  
-http://coolshell.cn/articles/4535.html <!-- .element: class="fragment" -->
+[✨一些软件设计的原则](http://coolshell.cn/articles/4535.html) <!-- .element: class="fragment" -->
 
 +++
 
@@ -97,6 +96,17 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
 ## 设计模式
 
+---
+
+## 设计模式
+[《设计模式：可复用面向对象软件的基础》](https://zh.wikipedia.org/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%8F%AF%E5%A4%8D%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%9F%BA%E7%A1%80)  
+![book_cover](https://upload.wikimedia.org/wikipedia/en/7/78/Design_Patterns_cover.jpg)  
+作者(GoF): Gamma Erich Helm Richard Johnson Ralph Vlissides John.
+
+---
+
+## 设计模式分类
+
 ![](http://www.vincehuston.org/images/GoF_full_medium.png)
 
 ---
@@ -136,9 +146,9 @@ public class ToolManager {
     }
 }
 ```
-❓为什么要这样实现 <!-- .element: class="fragment" -->
+❓为什么要这样实现   <!-- .element: class="fragment" -->
 <!--延迟加载的线程不安全，synchronized带来性能开销，双重检查锁定必须使用volatile(java 1.5)
--->
+-->  
 [双重检查锁定与延迟初始化](http://www.infoq.com/cn/articles/double-checked-locking-with-delay-initialization) <!-- .element: class="fragment" -->
 
 +++
@@ -158,8 +168,14 @@ public class InstanceFactory {
 
 ## 单例模式的问题
 
-[:imp:为什么单例模式是邪恶的]http://www.cnblogs.com/nomoneynowife/p/3719031.html 
+[👿为什么单例模式是邪恶的](http://www.cnblogs.com/nomoneynowife/p/3719031.html)  <!-- .element: class="fragment" -->
+* 和全局变量没什么区别 <!-- .element: class="fragment" -->
+* 即负责创建逻辑也限制创建的数量，违反SRP <!-- .element: class="fragment" --> 
+<!--工厂模式与建造者模式不违反SRP-->
+* 紧耦合，违反OCP，无法在测试时方便的替换 <!-- .element: class="fragment" -->
+* 无法判断当前的状态，测试无法独立运行 <!-- .element: class="fragment" -->
 
+✨仔细分析上下文，确定无上诉设计的需要; 或者改用其他设计模式 <!-- .element: class="fragment" -->
 ---
 
 ## 工厂模式
