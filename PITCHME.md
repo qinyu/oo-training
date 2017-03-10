@@ -126,6 +126,7 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 +++
 
 ## 实现
+
 ```java
 public class ToolManager {
     private static volatile ToolManager mToolManager;
@@ -143,6 +144,7 @@ public class ToolManager {
     }
 }
 ```
+
 ❓为什么要这样实现   <!-- .element: class="fragment" -->
 <!--延迟加载的线程不安全，synchronized带来性能开销，双重检查锁定必须使用volatile(java 1.5)
 -->  
@@ -162,6 +164,8 @@ public class InstanceFactory {
     }
 }
 ```
+
++++
 
 ## 运用
 
@@ -290,6 +294,8 @@ public class MarketingManager extends HiringManager {
     }
 }
 ```
+
++++
 
 ## 实现(完)
 
@@ -487,6 +493,9 @@ Pizza pizza = new Pizza.Builder(12)
                        .bacon(true)
                        .build();
 ```
+
++++
+
 ## 运用
 
 - Android: [ShareCompat.IntentBuilder](https://developer.android.com/reference/android/support/v4/app/ShareCompat.IntentBuilder.html) [NotificationCompat.Builder](https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html)
@@ -580,7 +589,7 @@ public class BaseBundle {
 
 +++
 
-运用
+## 运用
 
 
 
