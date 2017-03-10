@@ -93,7 +93,7 @@ http://coolshell.cn/articles/4535.html <!-- .element: class="fragment" -->
 A. 上层模块不应该依赖下层模块，两者之间应该依赖抽象而不是具体实现
 B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
----?image=http://www.vincehuston.org/images/GoF_full_medium.png
+---
 
 ## 设计模式
 
@@ -119,9 +119,9 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 +++
 
 ## 常见实现
-<pre><code>
+```java
 public class ToolManager {
-    private static <b>volatile</b> ToolManager mToolManager;
+    private static volatile ToolManager mToolManager;
     private static Object mObject = new Object();
 
     public static ToolManager getInstance(){
@@ -135,7 +135,30 @@ public class ToolManager {
         return mToolManager;
     }
 }
-</code></pre>
+```
+❓为什么要这样实现 <!-- .element: class="fragment" -->
+<!--延迟加载的线程不安全，synchronized带来性能开销，双重检查锁定必须使用volatile(java 1.5)
+-->
+[双重检查锁定与延迟初始化](http://www.infoq.com/cn/articles/double-checked-locking-with-delay-initialization) <!-- .element: class="fragment" -->
+
++++
+
+## 最短的线程安全实现
+```java
+public class InstanceFactory {
+    private static class InstanceHolder {
+        public static Instance instance = new Instance();
+    }
+
+    public static Instance getInstance() {
+        return InstanceHolder.instance;
+    }
+}
+```
+
+## 单例模式的问题
+
+[:imp:为什么单例模式是邪恶的]http://www.cnblogs.com/nomoneynowife/p/3719031.html 
 
 ---
 
