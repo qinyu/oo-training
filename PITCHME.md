@@ -20,10 +20,10 @@
 
 ## 面向对象术语
 
-* **封装** 把一个单元的内部实现隐藏起来，显示尽量少的接口，使变化局限于单元内部 <!-- .element: class="fragment" -->
-* **继承** 使用现有类的一种方式，子类可以直接复用父类的属性和行为 <!-- .element: class="fragment" -->
-* **代理** 使用现有类的另一种方式，将请求转派给已有类的对象 <!-- .element: class="fragment" -->
-* **多态** 不同类型的对象能响应同一个方法调用，并表现出各自不同的行为 <!-- .element: class="fragment" -->
+* **封装**-把一个单元的内部实现隐藏起来，显示尽量少的接口，使变化局限于单元内部 <!-- .element: class="fragment" -->
+* **继承**-使用现有类的一种方式，子类可以直接复用父类的属性和行为 <!-- .element: class="fragment" -->
+* **代理**-使用现有类的另一种方式，将请求转派给已有类的对象 <!-- .element: class="fragment" -->
+* **多态**-不同类型的对象能响应同一个方法调用，并表现出各自不同的行为 <!-- .element: class="fragment" -->
 
 ❓重要程度如何排序 <!-- .element: class="fragment" -->
 
@@ -45,9 +45,10 @@
 
 ---
 
-# SOLID原则
+# SOLID原则 
 
-✨[一些软件设计的原则](http://coolshell.cn/articles/4535.html) <!-- .element: class="fragment" -->
+✨一些软件设计的原则 <!-- .element: class="fragment" -->  
+http://coolshell.cn/articles/4535.html <!-- .element: class="fragment" -->
 
 +++
 
@@ -92,7 +93,7 @@
 A. 上层模块不应该依赖下层模块，两者之间应该依赖抽象而不是具体实现
 B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
----?http://www.vincehuston.org/images/GoF_full_medium.png
+---?image=http://www.vincehuston.org/images/GoF_full_medium.png
 
 ## 设计模式
 
