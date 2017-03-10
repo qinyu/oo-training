@@ -122,13 +122,11 @@ B. 抽象不应该依赖于细节，细节应该依赖于抽象
 
 ---
 
-## 单例模式
-
-![uml](https://www.tutorialspoint.com/design_pattern/images/singleton_pattern_uml_diagram.jpg)
+# 单例模式
 
 +++
 
-## 常见实现
+## 实现
 ```java
 public class ToolManager {
     private static volatile ToolManager mToolManager;
@@ -176,22 +174,150 @@ public class InstanceFactory {
 * 全局状态处于未知状态<!-- .element: class="fragment" --> 测试无法独立运行 <!-- .element: class="fragment" -->
 
 ✨仔细分析上下文，确定无上诉设计的需要(确定是全局仅需要一个实例); 或者改用其他设计模式 <!-- .element: class="fragment" -->
+
 ---
 
-## 工厂模式
+# 简单工厂模式
 
-![uml](https://www.tutorialspoint.com/design_pattern/images/factory_pattern_uml_diagram.jpg)
+把创建分离到单独的方法
+
++++ 
+
+## 实现(待续)
+```java
+public class SimplePizzaFactory {
+public Pizza createPizza(String type) {
+Pizza pizza = null;
+if (type.equals(“cheese”)) { pizza = new CheesePizza();
+} else if (type.equals(“pepperoni”)) { pizza = new PepperoniPizza();
+} else if (type.equals(“clam”)) {
+pizza = new ClamPizza();
+} else if (type.equals(“veggie”)) {
+pizza = new VeggiePizza(); }
+ return pizza; }
+}
+```
 
 +++
 
-## 抽象工厂模式
-![uml](https://www.tutorialspoint.com/design_pattern/images/abstractfactory_pattern_uml_diagram.jpg)
+## 实现(完)
+```java
+public class SimplePizzaFactory {
+    SimplePizzaFactory factory;
+    public PizzaStore(SimplePizzaFactory factory) { this.factory = factory; }
+    public Pizza createPizza(String type) {
+        Pizza pizza = null;
+        if (type.equals(“cheese”)) { pizza = new CheesePizza(); }
+        else if (type.equals(“pepperoni”)) { pizza = new PepperoniPizza(); }
+        else if (type.equals(“clam”)) { pizza = new ClamPizza(); } else if (type.equals(“veggie”)) { pizza = new VeggiePizza(); }
+        return pizza;
+    }
+}
+```
+
+## 支持
+
+IDE: https://www.jetbrains.com/help/idea/2016.3/replace-constructor-with-factory-method.html
+
+---
+
+# 工厂方法模式
+
+提供了一个把生成逻辑移交给子类的方法。
 
 +++
 
-## 建造者模式
+## 实现
 
-![uml](https://www.tutorialspoint.com/design_pattern/images/builder_pattern_uml_diagram.jpg)
+```java
+interface Interviewer {
+    public void askQuestions();
+}
+
+public class Developer implements Interviewer {
+    public void askQuestions() {
+        System.out.prinln("Asking about design patterns!");
+    }
+}
+
+public class CommunityExecutive implements Interviewer {
+    public void askQuestions() {
+        System.out.prinln("Asking about community building");
+    }
+}
+```
+
+---
+
+# 抽象工厂模式
+
+一个制造工厂的工厂；一个工厂把独立但是相关／有依赖性的工厂进行分类，但是不需要给出具体的类。
+
++++
+
+## 实现(待续)
+```java
+public interface Shape {
+   void draw();
+}
+public class Rectangle implements Shape {
+   @Override
+   public void draw() {
+      System.out.println("Inside Rectangle::draw() method.");
+   }
+}
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Square::draw() method.");
+   }
+}
+```
++++
+
+## 实现(待续)
+```java
+public interface Color {
+   void fill();
+}
+public class Red implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Red::fill() method.");
+   }
+}
+public class Green implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Green::fill() method.");
+   }
+}
+public class Blue implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Blue::fill() method.");
+   }
+}
+```
+
+## 实现(完)
+
+```java
+public abstract class AbstractFactory {
+   abstract Color getColor(String color);
+   abstract Shape getShape(String shape) ;
+}
+```
+
+---
+
+# 建造者模式
+
+创建不同特点的对象而避免构造函数污染。当一个对象都多种特点的时候比较实用。或者在创造逻辑里有许多步骤的时候。
 
 +++
 
@@ -260,18 +386,92 @@ Pizza pizza = new Pizza.Builder(12)
 
 - Android: [ShareCompat.IntentBuilder](https://developer.android.com/reference/android/support/v4/app/ShareCompat.IntentBuilder.html) [NotificationCompat.Builder](https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html)
 - IDE支持：https://www.jetbrains.com/help/idea/2016.3/replace-constructor-with-builder.html
-+++
 
-## 
+---
 
+# 原型模式
 
-## 原型模式
-
-![uml](https://www.tutorialspoint.com/design_pattern/images/prototype_pattern_uml_diagram.jpg)
+通过"克隆"已有的对象来创建新对象
 
 +++
 
+## 实现(待续)
+```java
+    /**
+     * Retrieves a map of extended data from the intent.
+     *
+     * @return the map of all extras previously added with putExtra(),
+     * or null if none have been added.
+     */
+    public Bundle getExtras() {
+        return (mExtras != null)
+                ? new Bundle(mExtras)
+                : null;
+    }
+```
 
++++
+
+## 实现(待续)
+```java
+public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
+    /**
+     * Constructs a Bundle containing a copy of the mappings from the given
+     * Bundle.
+     *
+     * @param b a Bundle to be copied.
+     */
+    public Bundle(Bundle b) {
+        super(b);
+        mFlags = b.mFlags;
+    }
+
+    /**
+     * Clones the current Bundle. The internal map is cloned, but the keys and
+     * values to which it refers are copied by reference.
+     */
+    @Override
+    public Object clone() {
+        return new Bundle(this);
+    }
+}
+```
+
++++
+
+# 实现(完)
+
+```java
+public class BaseBundle {
+/**
+     * Constructs a Bundle containing a copy of the mappings from the given
+     * Bundle.
+     *
+     * @param b a Bundle to be copied.
+     */
+    BaseBundle(BaseBundle b) {
+        if (b.mParcelledData != null) {
+            if (b.isEmptyParcel()) {
+                mParcelledData = NoImagePreloadHolder.EMPTY_PARCEL;
+            } else {
+                mParcelledData = Parcel.obtain();
+                mParcelledData.appendFrom(b.mParcelledData, 0, b.mParcelledData.dataSize());
+                mParcelledData.setDataPosition(0);
+            }
+        } else {
+            mParcelledData = null;
+        }
+
+        if (b.mMap != null) {
+            mMap = new ArrayMap<>(b.mMap);
+        } else {
+            mMap = null;
+        }
+
+        mClassLoader = b.mClassLoader;
+    }
+}
+```
 
 +++
 
