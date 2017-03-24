@@ -574,9 +574,189 @@ public class BaseBundle {
 }
 ```
 
+--- 
+
+# 依赖注入
+
 +++
 
-## 运用
+## 使用了工厂方法
+```java
+public class ServiceApi {
+    private Client client;
+    public ServiceApi(){
+        client = HTTPClientFactory.createHTTPClient();
+    }
+}
+```
+> 有什么问题？
+<!-- .element: class="fragment" -->
+
+* “硬编码”初始化违反开闭原则  <!-- .element: class="fragment" -->
+* 负责对象创建（甚至声明周期管理）违反单一职责原则  <!-- .element: class="fragment" -->
+
++++
+
+所有的逻辑都被代码（ServiceApi）**控制**，使用它只能被动的接受它的依赖（HTTPClientFactory.createHTTPClient()返回的具体Client）
+
++++
+
+## 寻找“接缝”
+
+"**接缝**是指程序中的一些特殊的点，在这些点上你无需做任何修改就可以达到改动程序行为的目的。"  --《修改代码的艺术》
+
++++
+
+## 接缝在哪里？
+
+```java
+public class ServiceApi {
+    private Client client;
+    public ServiceApi(){
+        client = HTTPClientFactory.createClient();
+    }
+}
+```
+> 需要增加接缝
+<!-- .element: class="fragment" -->
+
++++
+
+## 1. 改造构造方法
+```java
+public class ServiceApi {
+    private Client client;
+    public ServiceApi(Client client){
+        this.client = client;
+    }
+}
+```
+
++++
+
+## 2. 增加Setter
+```java
+public class ServiceApi {
+    private Client client;
+    public ServiceApi(){
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+}
+```
+
++++
+
+## 3. 通过继承改变行为
+```java
+public class ServiceApi {
+    protected Client client;
+    public ServiceApi(){
+        client = HTTPClientFactory.createClient();
+    }
+}
+
+public class MyServiceApi extends ServiceApi {
+    public MyServiceApi(){
+        client = RPCClientFactory.createClient();
+    }
+}
+```
+
++++
+
+## 4. 通过形参改变行为
+```java
+public class ServiceApi {
+
+    public JSONObject get(Client client) {
+        return client.get(...)
+    }
+}
+```
+
++++
+
+## 控制反转
+
+对象在被创建的时候，由一个调控系统内所有对象的外界实体，将其所依赖的对象的引用传递给它，即**依赖**被**注入**到对象中。<!-- .element: class="fragment" -->
+
+> "不要给我们打电话，我们会打给你"。--好莱坞原则 <!-- .element: class="fragment" -->
+
+> “库”和“框架” <!-- .element: class="fragment" -->
+
++++ 
+
+## 依赖注入
+
+我们需要一个调控系统，这个调控系统中我们存放一些对象的实体，或者对象的描述; 在类A的实例创建过程中即创建了A依赖的B对象，通过类型或名称来判断将不同的对象注入到不同的属性中。
+
++++
+
+## Java中常见的依赖注入方式
+
+* 构造方法注入  <!-- .element: class="fragment" -->
+* Setter注入  <!-- .element: class="fragment" -->
+* 方法形参注入  <!-- .element: class="fragment" -->
+* 注解注入（JSR330参考实现）  <!-- .element: class="fragment" -->
+
+> 可以自己实现注入
+
++++
+
+## 常见的Java注入库
+
+* PicoContainer  <!-- .element: class="fragment" -->
+* Guice  <!-- .element: class="fragment" -->
+* Spring DI  <!-- .element: class="fragment" -->
+* Dagger 2  <!-- .element: class="fragment" -->
+
++++
+
+##　简单对比
+
+Generic:  
+https://stackoverflow.com/questions/2026016/google-guice-vs-picocontainer-for-dependency-injection
+Android:  
+http://blog.nimbledroid.com/2016/03/07/performance-of-dependency-injection-libraries.html
+
+> 以Dagger 2为例介绍依赖注入框架 <!-- .element: class="fragment" -->
+
++++
+
+## Dagger 2
+
+
++++ 
+
+## 如何测试
+
+ 
+
+
+
+
+
+
+---
+
+
+## 结构型模式
+
+* 适配器模式 Adapter
+* 桥接模式 Bridge
+* 组合模式 Composite
+* 装饰器模式 Decorator
+* 门面模式 Facade
+* 享元模式 Flyweight
+* 代理模式 Proxy
+
+
+---
+
+# 适配器模式
 
 
 
