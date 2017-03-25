@@ -722,7 +722,7 @@ return client.get(...);
 * 构造方法注入 <!-- .element: class="fragment" -->
 * Setter注入 <!-- .element: class="fragment" -->
 * 方法形参注入 <!-- .element: class="fragment" -->
-* 注解注入（JSR330参考实现） <!-- .element: class="fragment" -->
+* 属性(成员变量)注入 <!-- .element: class="fragment" -->
 
 +++
 
@@ -808,10 +808,158 @@ http://blog.nimbledroid.com/2016/03/07/performance-of-dependency-injection-libra
 
 ## Dagger 2
 
+* @Inject：需要注入依赖的地方，Dagger 会构造一个该类的实例并满足它所需要的依赖
+<!-- .element: class="fragment" -->
+* @Module：依赖的提供者，Module 类中的方法专门提供依赖，并用@Provides注解标记
+<!-- .element: class="fragment" -->
+* @Component：依赖的注入者，是@Inject和@Module的桥梁，它从@Module中获取依赖并注入给@Inject
+<!-- .element: class="fragment" -->
+
+
++++
+
+## @Inject(构造方法注入)
+
+```java
+public class LoginActivityPresenter {
+    
+    private LoginActivity loginActivity;
+    private UserDataStore userDataStore;
+    private UserManager userManager;
+    
+    @Inject
+    public LoginActivityPresenter(LoginActivity loginActivity,
+                                  UserDataStore userDataStore,
+                                  UserManager userManager) {
+        this.loginActivity = loginActivity;
+        this.userDataStore = userDataStore;
+        this.userManager = userManager;
+    }
+}
+```
+> 被注解的类也可以作为对象图的依赖
+<!-- .element: class="fragment" -->
+
++++
+
+## @Inject(属性注入)
+
+```java
+public class SplashActivity extends AppCompatActivity {
+    
+    @Inject
+    LoginActivityPresenter presenter;
+    @Inject
+    AnalyticsManager analyticsManager;
+    
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        getAppComponent().inject(this);
+    }
+}
+```
+
++++
+## @Module & @Provides
+```java
+@Module
+public class GithubApiModule {
+    
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+        okHttpClient.setReadTimeout(60 * 1000, TimeUnit.MILLISECONDS);
+        return okHttpClient;
+    }
+
+    @Provides
+    @Singleton
+    RestAdapter provideRestAdapter(Application application, OkHttpClient okHttpClient) {
+        RestAdapter.Builder builder = new RestAdapter.Builder();
+        builder.setClient(new OkClient(okHttpClient))
+               .setEndpoint(application.getString(R.string.endpoint));
+        return builder.build();
+    }
+}
+```
+> 有内聚的一组工厂方法
+<!-- .element: class="fragment" -->
+
++++
+
+## @Component
+
+```java
+
+@Singleton
+@Component(
+    modules = {
+        AppModule.class,
+        GithubApiModule.class
+    }
+)
+public interface AppComponent {
+
+    void inject(GithubClientApplication githubClientApplication);
+
+    Application getApplication();
+
+    AnalyticsManager getAnalyticsManager();
+
+    UserManager getUserManager();
+}
+```
+> 需要哪些"工厂",哪些对象可以被注入，提供了哪些依赖供注入
+<!-- .element: class="fragment" -->
+
++++
+
+## 注入
+
+```java
+public class GithubClientApplication extends Application {
+
+    private AppComponent appComponent;
+
+    public static GithubClientApplication get(Context context) {
+        return (GithubClientApplication) context.getApplicationContext();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+
+        //Global dependencies graph is created here
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .githubApiModule(new GithubApiModule()) //Can be removed because of no-arg constructor
+                .build();
+    }
+
+    //Just a helper to provide appComponent to local components which depend on it
+    public AppComponent getAppComponent() {
+        return appComponent;
+    }
+}
+```
+
++++
+
+## 完整例子
+
+https://frogermcs.github.io/dependency-injection-with-dagger-2-the-api/
 
 +++
 
 ## 如何测试
+
+单元测试时不需要注入容器，直接手动注入mock
 
 
 ---
@@ -905,6 +1053,8 @@ this.drawRectangle();
 
 # 桥接模式
 
+桥接模式倾向构造而非继承。实现细节被从一个层推送到另一个对象的另一层。
+
 +++
 
 ## 实现(待续)
@@ -976,6 +1126,7 @@ return "DrawProgram2: drawLine()";
 +++
 
 ## 实现(完)
+
 ```java
 Shape[] shapes = new Shape[]{
 new Circle(new DrawProgram1()),
@@ -1012,9 +1163,12 @@ Android中的Adapter
 
 # 组合模式
 
+组合模式让调用者可以用统一的模式对待不同的对象
+
 +++
 
 ## 实现(待续)
+
 ```java
 abstract class Figure {
 public String draw() {
@@ -1038,6 +1192,7 @@ return "Draw: Point";
 +++
 
 ## 实现(待续)
+
 ```java
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -1068,7 +1223,9 @@ figures.add(figure);
 ```
 
 +++
+
 ## 实现(完)
+
 ```java
 Figure point = new Point();
 Figure line = new Line();
@@ -1081,6 +1238,7 @@ System.out.println(composite.draw())
 composite.remove(point)
 System.out.println(composite.draw());
 ```
+
 +++
 
 ## 应用
@@ -1094,7 +1252,10 @@ Android的ViewGroup
 
 # 门面模式
 
+门面模式提供了一个复杂子系统的简单接口。
+
 +++
+
 ## 实现(待续)
 ```java
 class Caffeine {
@@ -1147,8 +1308,12 @@ Android中的Context.getString(int resId)
 ---
 # 享元模式
 
+通过尽可能分享相似的对象，来将内存使用或计算开销降到最低。
+
 +++
+
 ## 实现(待续)
+
 ```java
 import java.util.HashMap;
 import java.util.Map;
@@ -1177,8 +1342,11 @@ return this.flavourName;
 }
 }
 ```
+
 +++
+
 ## 实现(待续)
+
 ```java
 class Order {
 public final int tableNumber;
@@ -1195,8 +1363,11 @@ return "Order at table: " + tableNumber + ", coffee flavour: " + coffeeFlavour.g
 }
 
 ```
+
 +++
+
 ## 实现(待续)
+
 ```java
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -1221,8 +1392,11 @@ return report;
 }
 }
 ```
+
 +++
+
 ## 实现(完)
+
 ```java
 CoffeeShop shop = new CoffeeShop();
 
@@ -1267,8 +1441,12 @@ assert number3 == number4 //??
 
 # 代理模式
 
+使用代理模式，一个类表现出了另一个类的功能。
+
 +++
+
 ## 实现(待续)
+
 ```java
 abstract class File {
 protected boolean isProtected = true;
@@ -1282,8 +1460,11 @@ return "Read public File";
 }
 
 ```
+
 +++
+
 ## 实现(待续)
+
 ```java
 class ProxyProtectedFile extends File {
 private File file = null;
@@ -1304,6 +1485,7 @@ this.isProtected = isProtected;
 }
 }
 ```
+
 +++
 
 ## 实现(完)
@@ -1341,7 +1523,10 @@ System.out.println(file.read());
 
 # 装饰器模式
 
+装饰器模式让你能在运行时动态地改变一个对象的表现，通过把它们封装到一个装饰器类。
+
 +++
+
 ## 实现(待续)
 ```java
 abstract class Coffee {
@@ -1360,7 +1545,9 @@ return "SimpleCoffee";
 }
 }
 ```
+
 +++
+
 ## 实现(待续)
 ```java
 
