@@ -987,13 +987,13 @@ https://frogermcs.github.io/dependency-injection-with-dagger-2-the-api/
 
 ```java
 interface Figure {
-public void draw();
+    public void draw();
 }
 
 class Line implements Figure {
-public void draw() {
-System.out.println("Draw: Line");
-}
+    public void draw() {
+        System.out.println("Draw: Line");
+    }
 }
 
 new Line().draw();
@@ -1006,42 +1006,42 @@ new Line().draw();
 ```java
 // !不兼容的实现
 class Rectangle {
-public void drawRectangle() {
-System.out.println("DrawRectangle: Rectangle");
-}
+    public void drawRectangle() {
+        System.out.println("DrawRectangle: Rectangle");
+    }
 }
 
 // “包装”起来变成兼容的
 class AdapterRectangle implements Figure {
-private Rectangle rectangle = new Rectangle();
-public void draw() {
-rectangle.drawRectangle();
-}
+    private Rectangle rectangle = new Rectangle();
+    public void draw() {
+        rectangle.drawRectangle();
+    }
 }
 
 figures = new Figure[2];
 figures[0] = new Line();
 figures[1] = new AdapterRectangle();
 
-for (Figure figure : figures) {
-figure.draw();
+for (Figure figure: figures) {
+    figure.draw();
 }
 ```
 > 对象适配器--组合
-
+<!-- .element: class="fragment" -->
 +++
 
 ## 实现(二)
 
 ```java
 class AdapterRectangle extends Rectangle implements Figure {
-public void draw() {
-this.drawRectangle();
-}
+    public void draw() {
+        this.drawRectangle();
+    }
 }
 ```
 > 类适配器--继承
-
+<!-- .element: class="fragment" -->
 +++
 
 ## 应用
@@ -1061,33 +1061,33 @@ this.drawRectangle();
 ```java
 // 一组形状的抽象与实现
 abstract class Shape {
-protected DrawProgram drawProgram;
+    protected DrawProgram drawProgram;
 
-public Shape(DrawProgram drawProgram) {
-this.drawProgram = drawProgram;
-}
+    public Shape(DrawProgram drawProgram) {
+        this.drawProgram = drawProgram;
+    }
 
-public abstract String draw();
+    public abstract String draw();
 }
 
 class Line extends Shape {
-public Line(DrawProgram drawProgram) {
-super(drawProgram);
-}
+    public Line(DrawProgram drawProgram) {
+        super(drawProgram);
+    }
 
-public String draw() {
-return drawProgram.drawLine();
-}
+    public String draw() {
+        return drawProgram.drawLine();
+    }
 }
 
 class Circle extends Shape {
-public Circle(DrawProgram drawProgram) {
-super(drawProgram);
-}
+    public Circle(DrawProgram drawProgram) {
+        super(drawProgram);
+    }
 
-public String draw() {
-return drawProgram.drawCircle();
-}
+    public String draw() {
+        return drawProgram.drawCircle();
+    }
 }
 ```
 
@@ -1097,29 +1097,29 @@ return drawProgram.drawCircle();
 ```java
 // 一组绘制的抽象与实现
 abstract class DrawProgram {
-public abstract String drawCircle();
+    public abstract String drawCircle();
 
-public abstract String drawLine();
+    public abstract String drawLine();
 }
 
 class DrawProgram1 extends DrawProgram {
-public String drawCircle() {
-return "DrawProgram1: drawCircle()";
-}
+    public String drawCircle() {
+        return "DrawProgram1: drawCircle()";
+    }
 
-public String drawLine() {
-return "DrawProgram1: drawLine()";
-}
+    public String drawLine() {
+        return "DrawProgram1: drawLine()";
+    }
 }
 
 class DrawProgram2 extends DrawProgram {
-public String drawCircle() {
-return "DrawProgram2: drawCircle()";
-}
+    public String drawCircle() {
+        return "DrawProgram2: drawCircle()";
+    }
 
-public String drawLine() {
-return "DrawProgram2: drawLine()";
-}
+    public String drawLine() {
+        return "DrawProgram2: drawLine()";
+    }
 }
 ```
 
@@ -1128,21 +1128,21 @@ return "DrawProgram2: drawLine()";
 ## 实现(完)
 
 ```java
-Shape[] shapes = new Shape[]{
-new Circle(new DrawProgram1()),
-new Circle(new DrawProgram2()),
-new Line(new DrawProgram1()),
-new Line(new DrawProgram2())
+Shape[] shapes = new Shape[] {
+    new Circle(new DrawProgram1()),
+        new Circle(new DrawProgram2()),
+        new Line(new DrawProgram1()),
+        new Line(new DrawProgram2())
 }
-for (Shape shape : shapes) {
-System.out.println(shape.draw());
+for (Shape shape: shapes) {
+    System.out.println(shape.draw());
 }
 ```
 
 +++
 
 ## 应用(待续)
-Android中的Adapter
+* Android中的Adapter
 <!-- .element: class="fragment" -->
 ![Adapter](https://i.imgur.com/mk82Jd2.jpg)
 <!-- .element: class="fragment" -->
@@ -1171,21 +1171,21 @@ Android中的Adapter
 
 ```java
 abstract class Figure {
-public String draw() {
-return "";
-}
+    public String draw() {
+        return "";
+    }
 }
 
 class Line extends Figure {
-public String draw() {
-return "Draw: Line";
-}
+    public String draw() {
+        return "Draw: Line";
+    }
 }
 
 class Point extends Figure {
-public String draw() {
-return "Draw: Point";
-}
+    public String draw() {
+        return "Draw: Point";
+    }
 }
 ```
 
@@ -1198,27 +1198,27 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 class Composite extends Figure {
-private ArrayList<Figure> figures = new ArrayList<Figure>();
+    private ArrayList < Figure > figures = new ArrayList < Figure > ();
 
-public String draw() {
-String s = "";
+    public String draw() {
+        String s = "";
 
-ListIterator<Figure> iterator = figures.listIterator();
+        ListIterator < Figure > iterator = figures.listIterator();
 
-while (iterator.hasNext()) {
-s = s + " " + iterator.next().draw();
-}
+        while (iterator.hasNext()) {
+            s = s + " " + iterator.next().draw();
+        }
 
-return s;
-}
+        return s;
+    }
 
-public void remove(Figure figure) {
-figures.remove(figure);
-}
+    public void remove(Figure figure) {
+        figures.remove(figure);
+    }
 
-public void add(Figure figure) {
-figures.add(figure);
-}
+    public void add(Figure figure) {
+        figures.add(figure);
+    }
 }
 ```
 
@@ -1243,7 +1243,7 @@ System.out.println(composite.draw());
 
 ## 应用
 
-Android的ViewGroup
+* Android的ViewGroup
 <!-- .element: class="fragment" -->
 ![ViewGroup](http://abhiandroid.jobxfryqt.netdna-cdn.com/ui/wp-content/uploads/2016/06/Basic-UI-user-interface-ViewGroup-and-View-Diagram.jpg)
 <!-- .element: class="fragment" -->
@@ -1257,41 +1257,45 @@ Android的ViewGroup
 +++
 
 ## 实现(待续)
+
 ```java
 class Caffeine {
-protected String addCaffeine() {
-return "Caffeine";
-}
+    protected String addCaffeine() {
+        return "Caffeine";
+    }
 }
 
 class Sugar {
-protected String addSugar() {
-return "Sugar";
-}
+    protected String addSugar() {
+        return "Sugar";
+    }
 }
 
 class Water {
-protected String addWater() {
-return "Water";
-}
+    protected String addWater() {
+        return "Water";
+    }
 }
 ```
 
 +++
+
 ## 实现(待续)
+
 ```java
 class Facade {
-protected String makeCoffee() {
-Sugar s = new Sugar();
-Caffeine c = new Caffeine();
-Water w = new Water();
+    protected String makeCoffee() {
+        Sugar s = new Sugar();
+        Caffeine c = new Caffeine();
+        Water w = new Water();
 
-return "Coffee = " + w.addWater() + " + " + c.addCaffeine() + " + " + s.addSugar();
-}
+        return "Coffee = " + w.addWater() + " + " + c.addCaffeine() + " + " + s.addSugar();
+    }
 }
 ```
 
 +++
+
 ## 实现(完)
 ```java
 Facade f = new Facade();
@@ -1319,27 +1323,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Menu {
-public Map<String, CoffeeFlavour> coffeeFlavours = new HashMap<String, CoffeeFlavour>();
+    public Map < String, CoffeeFlavour > coffeeFlavours = new HashMap < String, CoffeeFlavour > ();
 
-public CoffeeFlavour lookup(String flavorName) {
-if (!coffeeFlavours.containsKey(flavorName)) {
-coffeeFlavours.put(flavorName, new CoffeeFlavour(flavorName));
-}
+    public CoffeeFlavour lookup(String flavorName) {
+        if (!coffeeFlavours.containsKey(flavorName)) {
+            coffeeFlavours.put(flavorName, new CoffeeFlavour(flavorName));
+        }
 
-return coffeeFlavours.get(flavorName);
-}
+        return coffeeFlavours.get(flavorName);
+    }
 }
 
 class CoffeeFlavour {
-private final String flavourName;
+    private final String flavourName;
 
-public CoffeeFlavour(String flavourName) {
-this.flavourName = flavourName;
-}
+    public CoffeeFlavour(String flavourName) {
+        this.flavourName = flavourName;
+    }
 
-public String getFlavourName() {
-return this.flavourName;
-}
+    public String getFlavourName() {
+        return this.flavourName;
+    }
 }
 ```
 
@@ -1373,23 +1377,23 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 class CoffeeShop {
-public Menu menu = new Menu();
-public ArrayList<Order> orders = new ArrayList<Order>();
+    public Menu menu = new Menu();
+    public ArrayList < Order > orders = new ArrayList < Order > ();
 
-public void getOrder(int tableNumber, String coffeeFlavour) {
-orders.add(new Order(tableNumber, menu.lookup(coffeeFlavour)));
-}
+    public void getOrder(int tableNumber, String coffeeFlavour) {
+        orders.add(new Order(tableNumber, menu.lookup(coffeeFlavour)));
+    }
 
-public String toString() {
-String report = "";
-ListIterator<Order> orderIterator = orders.listIterator();
+    public String toString() {
+        String report = "";
+        ListIterator < Order > orderIterator = orders.listIterator();
 
-while (orderIterator.hasNext()) {
-report += orderIterator.next().toString() + "\n";
-}
+        while (orderIterator.hasNext()) {
+            report += orderIterator.next().toString() + "\n";
+        }
 
-return report;
-}
+        return report;
+    }
 }
 ```
 
@@ -1435,7 +1439,7 @@ assert number3 == number4 //??
 ![IntegerCache](http://www.injavawetrust.com/wp-content/uploads/integer-pool.png)
 <!-- .element: class="fragment" -->
 
-[Java中的IntergerCache](http://www.importnew.com/18884.html)
+* [Java中的IntergerCache](http://www.importnew.com/18884.html)
 <!-- .element: class="fragment" -->
 ---
 
@@ -1449,16 +1453,16 @@ assert number3 == number4 //??
 
 ```java
 abstract class File {
-protected boolean isProtected = true;
+    protected boolean isProtected = true;
 
-public abstract String read();
+    public abstract String read();
 }
 
 class PublicFile extends File {
-public String read() {
-return "Read public File";
+    public String read() {
+        return "Read public File";
+    }
 }
-
 ```
 
 +++
@@ -1467,22 +1471,22 @@ return "Read public File";
 
 ```java
 class ProxyProtectedFile extends File {
-private File file = null;
+    private File file = null;
 
-public ProxyProtectedFile () {
-this.file = new PublicFile();
-}
+    public ProxyProtectedFile() {
+        this.file = new PublicFile();
+    }
 
-public String read() {
-if (isProtected)
-return "File is protected";
-else
-return this.file.read();
-}
+    public String read() {
+        if (isProtected)
+            return "File is protected";
+        else
+            return this.file.read();
+    }
 
-public void setProtection(boolean isProtected) {
-this.isProtected = isProtected;
-}
+    public void setProtection(boolean isProtected) {
+        this.isProtected = isProtected;
+    }
 }
 ```
 
@@ -1491,13 +1495,13 @@ this.isProtected = isProtected;
 ## 实现(完)
 
 ```java
-File[] files = new File[]{
-new ProxyProtectedFile(),
-new PublicFile()
+File[] files = new File[] {
+    new ProxyProtectedFile(),
+        new PublicFile()
 };
 
-for (File file : files) {
-System.out.println(file.read());
+for (File file: files) {
+    System.out.println(file.read());
 }
 ```
 
@@ -1530,19 +1534,19 @@ System.out.println(file.read());
 ## 实现(待续)
 ```java
 abstract class Coffee {
-public abstract double getCost();
+    public abstract double getCost();
 
-public abstract String getIngredients();
+    public abstract String getIngredients();
 }
 
 class SimpleCoffee extends Coffee {
-public double getCost() {
-return 1;
-}
+    public double getCost() {
+        return 1;
+    }
 
-public String getIngredients() {
-return "SimpleCoffee";
-}
+    public String getIngredients() {
+        return "SimpleCoffee";
+    }
 }
 ```
 
@@ -1552,19 +1556,19 @@ return "SimpleCoffee";
 ```java
 
 abstract class CoffeeDecorator extends Coffee {
-private final Coffee decorator;
+    private final Coffee decorator;
 
-public CoffeeDecorator(Coffee decorator) {
-this.decorator = decorator;
-}
+    public CoffeeDecorator(Coffee decorator) {
+        this.decorator = decorator;
+    }
 
-public double getCost() {
-return decorator.getCost();
-}
+    public double getCost() {
+        return decorator.getCost();
+    }
 
-public String getIngredients() {
-return decorator.getIngredients();
-}
+    public String getIngredients() {
+        return decorator.getIngredients();
+    }
 }
 ```
 
@@ -1575,27 +1579,27 @@ return decorator.getIngredients();
 ```java
 
 class Milk extends CoffeeDecorator {
-public Milk(Coffee decorator) {
-super(decorator);
-}
+    public Milk(Coffee decorator) {
+        super(decorator);
+    }
 
-public double getCost() {
-return super.getCost() + 0.5;
-}
+    public double getCost() {
+        return super.getCost() + 0.5;
+    }
 
-public String getIngredients() {
-return super.getIngredients() + ", " + "Milk";
-}
+    public String getIngredients() {
+        return super.getIngredients() + ", " + "Milk";
+    }
 }
 
 class Sugar extends CoffeeDecorator {
-public Sugar(Coffee decorator) {
-super(decorator);
-}
+    public Sugar(Coffee decorator) {
+        super(decorator);
+    }
 
-public String getIngredients() {
-return super.getIngredients() + ", " + "Sugar";
-}
+    public String getIngredients() {
+        return super.getIngredients() + ", " + "Sugar";
+    }
 }
 ```
 
@@ -1615,10 +1619,10 @@ System.out.println(custom.getCost());
 
 ## 应用(待续)
 
-[OKHttp的Interceptor](https://github.com/square/okhttp/wiki/Interceptors)
-<!-- .element: class="fragment" -->
+* [OKHttp的Interceptor](https://github.com/square/okhttp/wiki/Interceptors)
+<!-- .element: class="fragment" -->  
 
-![OKHTTP](https://raw.githubusercontent.com/wiki/square/okhttp/interceptors@2x.png)
+<img src="https://raw.githubusercontent.com/wiki/square/okhttp/interceptors@2x.png" style="width: 300px;"/>    
 <!-- .element: class="fragment" -->
 
 
@@ -1626,5 +1630,7 @@ System.out.println(custom.getCost());
 
 ## 应用(完)
 
+* Java IO  
+<!-- .element: class="fragment" -->
 ![Java中的IO](http://img.it610.com/image/product/c03c6d9c7eaa4f18b1225f4dc176fc96.jpg)
 <!-- .element: class="fragment" -->
