@@ -1637,17 +1637,44 @@ System.out.println(custom.getCost());
 
 ---
 
-## 行为型模式
+## 行为型模式(待续)
+
+* 职责链模式
+* 命令模式
+* 迭代器模式
+* 中介者模式
+* 观察者模式
+
++++
+
+## 行为型模式(待续)
+
+* 备忘录模式
+* 访问者模式
+* 策略模式
+* 状态模式
+* 模板方法模式
+
+❓常见的行为性模式有哪些<!-- .element: class="fragment" -->
+
++++
+
+## 行为型模式(待续)
 
 * 职责链模式
 * **命令模式**
 * **迭代器模式**
-* 中介者模式
+* ~~中介者模式~~
 * **观察者模式**
+
++++
+
+## 行为型模式(完)
+
 * 备忘录模式
-* 访问者模式
+* ~~访问者模式~~
 * **策略模式**
-* 状态模式
+* ~~状态模式~~
 * 模板方法模式
 
 ---
@@ -1658,7 +1685,7 @@ System.out.println(custom.getCost());
 
 +++
 
-## 实现
+## 实现(待续)
 
 ```java
 interface Image {
@@ -1676,7 +1703,12 @@ class LS implements Image {
         return "LS";
     }
 }
+```
++++
 
+## 实现(完)
+
+```java
 class Processor {
     private static final Random RANDOM = new Random();
     private static int nextID = 1;
@@ -1691,7 +1723,13 @@ class Processor {
         return true;
     }
 }
+```
 
++++
+
+## 实现(待续)
+
+```java
 public class ChainDemo {
     public static void main( String[] args ) {
         Image[] inputImages = {new IR(), new IR(), new LS(), new IR(), new LS(), new LS()};
@@ -1706,7 +1744,6 @@ public class ChainDemo {
         }
     }
 }
-
 ```
 
 +++
@@ -1737,7 +1774,7 @@ public class ChainDemo {
 
 +++
 
-## 实现
+## 实现(待续)
 
 ```java
 interface Command {
@@ -1761,7 +1798,13 @@ class Programmer implements Command {
         System.out.println("sell the bugs, charge extra for the fixes");
     }
 }
+```
 
++++
+
+## 实现(完)
+
+```java
 public class CommandDemo {
     public static List produceRequests() {
         List<Command> queue = new ArrayList<>();
@@ -1809,13 +1852,23 @@ public class CommandDemo {
 
 +++
 
-# 还需要介绍吗？
+## Demo
+
++++
+
+## 小结
+
+1. External/Explicit/Active Iterator<!-- .element: class="fragment" -->
+2. Internal/Implicit/Passive Iterator，可读性更高，扩展性更好，性能不如外部迭代器<!-- .element: class="fragment" -->
+3. 利用集合支持的高阶函数或lambda表达式<!-- .element: class="fragment" -->
 
 ---
 
 ## 观察者模式
 
 把对象状态的变化通知到所有有兴趣的依赖对象
+
+**Listener**<!-- .element: class="fragment" --> **Callback**<!-- .element: class="fragment" --> **Observer**<!-- .element: class="fragment" --> **Event**<!-- .element: class="fragment" --> **...**<!-- .element: class="fragment" -->
 
 +++
 
@@ -1827,9 +1880,15 @@ public class CommandDemo {
 
 迭代器+观察者
 
+http://reactivex.io/
+
 +++
 
 ![reactive](http://s.aho.mu/150221-frontrend_conference/img/fig-async-values.png)
+
++++
+
+## DEMO
 
 ---
 
@@ -1844,7 +1903,7 @@ public class CommandDemo {
 
 +++
 
-## 实现
+## 实现(待续)
 
 ```java
 class Memento {
@@ -1858,7 +1917,13 @@ class Memento {
         return state;
     }
 }
+```
 
++++
+
+## 实现(待续)
+
+```java
 class Originator {
     private String state;
    /* lots of memory consumptive private data that is not necessary to define the
@@ -1878,7 +1943,13 @@ class Originator {
         System.out.println("Originator: State after restoring from Memento: " + state);
     }
 }
+```
 
++++
+
+## 实现(待续)
+
+```java
 class Caretaker {
     private ArrayList<Memento> mementos = new ArrayList<>();
 
@@ -1890,7 +1961,13 @@ class Caretaker {
         return mementos.get(1);
     }
 }
+```
 
++++
+
+## 实现(完)
+
+```java
 public class MementoDemo {
     public static void main(String[] args) {
         Caretaker caretaker = new Caretaker();
@@ -1912,9 +1989,11 @@ public class MementoDemo {
 
 ![android activity state](http://www.techotopia.com/index.php/File:Android_activity_lifecycle_methods.png)
 
++++
+
 ## 问题
 
-Originator, Memento和Caretaker分别是哪个具体的对象?
+❓Originator, Memento和Caretaker分别是哪个具体的对象?
 
 ---
 
@@ -1926,12 +2005,8 @@ Originator, Memento和Caretaker分别是哪个具体的对象?
 
 ---
 
-## 中间人模式
+## 其他模式
+* ~~中介者模式~~
+* ~~访问者模式~~
+* ~~状态模式~~
 
----
-
-## 访问者模式
-
----
-
-## 状态模式
