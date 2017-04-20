@@ -1655,7 +1655,7 @@ System.out.println(custom.getCost());
 * 状态模式
 * 模板方法模式
 
-❓常见的行为性模式有哪些<!-- .element: class="fragment" -->
+❓常见的行为型模式有哪些？<!-- .element: class="fragment" -->
 
 +++
 
@@ -1872,7 +1872,126 @@ public class CommandDemo {
 
 +++
 
-# 还需要介绍吗？
+## 实现(待续)
+
+```java
+abstract class Observer {
+    protected Subject subject;
+    public abstract void update();
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+
+class Subject {
+    private List<Observer> observers = new ArrayList<>();
+    private int state;
+
+    public void add(Observer o) {
+        observers.add(o);
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int value) {
+        this.state = value;
+        execute();
+    }
+
+    private void execute() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+class HexObserver extends Observer {
+    public HexObserver(Subject subject) {
+        this.subject = subject;
+        this.subject.add(this);
+    }
+
+    public void update() {
+        System.out.print(" " + Integer.toHexString(subject.getState()));
+    }
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+class OctObserver extends Observer {
+    public OctObserver(Subject subject) {
+        this.subject = subject;
+        this.subject.add( this );
+    }
+
+    public void update() {
+        System.out.print(" " + Integer.toOctalString(subject.getState()));
+    }
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+class BinObserver extends Observer {
+    public BinObserver(Subject subject) {
+        this.subject = subject;
+        this.subject.add(this);
+    }
+
+    public void update() {
+        System.out.print(" " + Integer.toBinaryString(subject.getState()));
+    }
+}
+```
+
++++
+
+## 实现(完)
+
+```java
+
+public class ObserverDemo {
+    public static void main( String[] args ) {
+        Subject sub = new Subject();
+        // Client configures the number and type of Observers
+        new HexObserver(sub);
+        new OctObserver(sub);
+        new BinObserver(sub);
+        Scanner scan = new Scanner(System.in);
+        for (int i = 0; i < 5; i++) {
+            System.out.print("\nEnter a number: ");
+            sub.setState(scan.nextInt());
+        }
+    }
+}
+```
+
++++
+
+## 应用
+
+![eventbus]https://raw.githubusercontent.com/greenrobot/EventBus/master/EventBus-Publish-Subscribe.png
+
+http://greenrobot.org/eventbus/
 
 ---
 
@@ -1884,7 +2003,7 @@ http://reactivex.io/
 
 +++
 
-![reactive](http://s.aho.mu/150221-frontrend_conference/img/fig-async-values.png)
+![reactive](http://jonalvarezz.github.io/presentation-reactive-programming/images/reactivity.png)
 
 +++
 
@@ -1897,9 +2016,9 @@ http://reactivex.io/
 把对象恢复到之前记录的状态
 
 三种角色：
-1. Originator: 需要保存状态的对象，需要实现保存和恢复两个接口
-2. Memento: 对象的状态存放的对象，每一个状态都有独立的标记；状态保存使用通用的方式，如常见的对象序列化/反序列化机制
-3. Caretaker：知道什么时机记录Originator对象状态和恢复，并使用Memento来存放或者恢复Originator的状态
+1. Originator: 需要保存状态的对象，需要实现保存和恢复两个接口<!-- .element: class="fragment" -->
+2. Memento: 对象的状态存放的对象，每一个状态都有独立的标记；状态保存使用通用的方式，如常见的对象序列化/反序列化机制<!-- .element: class="fragment" -->
+3. Caretaker：知道什么时机记录Originator对象状态和恢复，并使用Memento来存放或者恢复Originator的状态<!-- .element: class="fragment" -->
 
 +++
 
@@ -1987,7 +2106,7 @@ public class MementoDemo {
 
 ## 应用
 
-![android activity state](http://www.techotopia.com/index.php/File:Android_activity_lifecycle_methods.png)
+![android activity state](https://developer.android.com/images/fundamentals/restore_instance.png)
 
 +++
 
