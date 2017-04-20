@@ -1634,3 +1634,304 @@ System.out.println(custom.getCost());
 <!-- .element: class="fragment" -->
 ![Java中的IO](http://img.it610.com/image/product/c03c6d9c7eaa4f18b1225f4dc176fc96.jpg)
 <!-- .element: class="fragment" -->
+
+---
+
+## 行为型模式
+
+* 职责链模式
+* **命令模式**
+* **迭代器模式**
+* 中介者模式
+* **观察者模式**
+* 备忘录模式
+* 访问者模式
+* **策略模式**
+* 状态模式
+* 模板方法模式
+
+---
+
+## 职责链模式
+
+发送者将待处理的对象发给一串处理者的，对象在处理者一次传递，直到有处理者完成了对象的处理
+
++++
+
+## 实现
+
+```java
+interface Image {
+    String process();
+}
+
+class IR implements Image {
+    public String process() {
+        return "IR";
+    }
+}
+
+class LS implements Image {
+    public String process() {
+        return "LS";
+    }
+}
+
+class Processor {
+    private static final Random RANDOM = new Random();
+    private static int nextID = 1;
+    private int id = nextID++;
+
+    public boolean execute(Image img) {
+        if (RANDOM.nextInt(2) != 0) {
+            System.out.println("   Processor " + id + " is busy");
+            return false;
+        }
+        System.out.println("Processor " + id + " - " + img.process());
+        return true;
+    }
+}
+
+public class ChainDemo {
+    public static void main( String[] args ) {
+        Image[] inputImages = {new IR(), new IR(), new LS(), new IR(), new LS(), new LS()};
+        Processor[] processors = {new Processor(), new Processor(), new Processor()};
+        for (int i=0, j; i < inputImages.length; i++) {
+            System.out.println("Operation #" + (i + 1) + ":");
+            j = 0;
+            while (!processors[j].execute(inputImages[i])) {
+                j = (j + 1) % processors.length;
+            }
+            System.out.println();
+        }
+    }
+}
+
+```
+
++++
+
+## 应用
+
+![android touch event dispatch](https://github.com/01org/mayloon-runtime/wiki/856px-Ontouch.png)<!-- .element: class="fragment" -->
+
++++
+
+## 应用
+![exception try catch](https://www.javatpoint.com/images/exceptionobject.JPG)<!-- .element: class="fragment" -->
+
++++
+
+### 特点
+
+1. 发送者只把对象发给第一个处理者，不关心最终由哪个处理者处理<!-- .element: class="fragment" -->
+2. 对象通常情况下最终一定会得到处理（责任），比如有默认的处理机制兜底<!-- .element: class="fragment" -->
+3. 责任“串”的形式可以是链表，也可以是组合模式的递归（后继处理者是当前处理者的容器），由发送者或者第三方创建或维护<!-- .element: class="fragment" -->
+4. 处理者基类的处理方式就是把对象传给下一个处理者<!-- .element: class="fragment" -->
+
+---
+
+## 命令模式
+
+封装可以执行的请求，接收者既不知道是谁发起的请求，也不知道请求的操作。
+
++++
+
+## 实现
+
+```java
+interface Command {
+    void execute();
+}
+
+class DomesticEngineer implements Command {
+    public void execute() {
+        System.out.println("take out the trash");
+    }
+}
+
+class Politician implements Command {
+    public void execute() {
+        System.out.println("take money from the rich, take votes from the poor");
+    }
+}
+
+class Programmer implements Command {
+    public void execute() {
+        System.out.println("sell the bugs, charge extra for the fixes");
+    }
+}
+
+public class CommandDemo {
+    public static List produceRequests() {
+        List<Command> queue = new ArrayList<>();
+        queue.add(new DomesticEngineer());
+        queue.add(new Politician());
+        queue.add(new Programmer());
+        return queue;
+    }
+
+    public static void workOffRequests(List queue) {
+        for (Object command : queue) {
+            ((Command)command).execute();
+        }
+    }
+
+    public static void main( String[] args ) {
+        List queue = produceRequests();
+        workOffRequests(queue);
+    }
+}
+```
+
++++
+
+## 应用
+
+![android handler & message](https://i.stack.imgur.com/nwhYs.png)
+
++++
+
+## 特点
+
+1. 命令存放在队列中<!-- .element: class="fragment" -->
+2. 大多数情况下命令是异步执行的<!-- .element: class="fragment" -->
+2. 命令中包括接收者，接收者被调用的方法，以及参数，非常适合使用lambda<!-- .element: class="fragment" -->
+3. 命令中一般会有一个“执行”方法，在合适的时机完成上述的方法调用<!-- .element: class="fragment" -->
+4. 第三方来维护和调用命令<!-- .element: class="fragment" -->
+5. 命令可以实现“执行”相逆的“撤销”方法<!-- .element: class="fragment" -->
+
+---
+
+## 迭代器模式
+
+把不同的数据结构抽象成通用的接口，提供遍历数据结构中元素的能力
+
++++
+
+# 还需要介绍吗？
+
+---
+
+## 观察者模式
+
+把对象状态的变化通知到所有有兴趣的依赖对象
+
++++
+
+# 还需要介绍吗？
+
+---
+
+## 响应式编程
+
+迭代器+观察者
+
++++
+
+![reactive](http://s.aho.mu/150221-frontrend_conference/img/fig-async-values.png)
+
+---
+
+## 备忘录模式
+
+把对象恢复到之前记录的状态
+
+三种角色：
+1. Originator: 需要保存状态的对象，需要实现保存和恢复两个接口
+2. Memento: 对象的状态存放的对象，每一个状态都有独立的标记；状态保存使用通用的方式，如常见的对象序列化/反序列化机制
+3. Caretaker：知道什么时机记录Originator对象状态和恢复，并使用Memento来存放或者恢复Originator的状态
+
++++
+
+## 实现
+
+```java
+class Memento {
+    private String state;
+
+    public Memento(String state) {
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
+    }
+}
+
+class Originator {
+    private String state;
+   /* lots of memory consumptive private data that is not necessary to define the
+    * state and should thus not be saved. Hence the small memento object. */
+
+    public void setState(String state) {
+        System.out.println("Originator: Setting state to " + state);
+        this.state = state;
+    }
+
+    public Memento save() {
+        System.out.println("Originator: Saving to Memento.");
+        return new Memento(state);
+    }
+    public void restore(Memento m) {
+        state = m.getState();
+        System.out.println("Originator: State after restoring from Memento: " + state);
+    }
+}
+
+class Caretaker {
+    private ArrayList<Memento> mementos = new ArrayList<>();
+
+    public void addMemento(Memento m) {
+        mementos.add(m);
+    }
+
+    public Memento getMemento() {
+        return mementos.get(1);
+    }
+}
+
+public class MementoDemo {
+    public static void main(String[] args) {
+        Caretaker caretaker = new Caretaker();
+        Originator originator = new Originator();
+        originator.setState("State1");
+        originator.setState("State2");
+        caretaker.addMemento( originator.save() );
+        originator.setState("State3");
+        caretaker.addMemento( originator.save() );
+        originator.setState("State4");
+        originator.restore( caretaker.getMemento() );
+    }
+}
+```
+
++++
+
+## 应用
+
+![android activity state](http://www.techotopia.com/index.php/File:Android_activity_lifecycle_methods.png)
+
+## 问题
+
+Originator, Memento和Caretaker分别是哪个具体的对象?
+
+---
+
+## 策略模式
+
+---
+
+## 模板方法模式
+
+---
+
+## 中间人模式
+
+---
+
+## 访问者模式
+
+---
+
+## 状态模式
