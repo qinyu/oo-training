@@ -1993,6 +1993,13 @@ public class ObserverDemo {
 
 http://greenrobot.org/eventbus/
 
++++
+
+## 小结
+
+1. 广播+异步，特别留意性能<!-- .element: class="fragment" -->
+2. 推模式(状态被推送给Observer)和拉模式(Observer自己查询状态)<!-- .element: class="fragment" -->
+
 ---
 
 ## 响应式编程
