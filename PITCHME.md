@@ -2123,11 +2123,154 @@ public class MementoDemo {
 
 ---
 
-## 策略模式
+## 策略模式&模板方法模式
 
----
+策略模式：实现一组算法，每一种算法都封装成一个对象，相互可以替换
 
-## 模板方法模式
+模板方法模式：基类实现好算法步骤，子类通过重写步骤实现不同的算法
+
++++
+
+## 实现(待续)
+
+```java
+// 1. Define the interface of the algorithm
+interface Strategy {
+    void solve();
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+// 2. Bury implementation
+@SuppressWarnings("ALL")
+abstract class StrategySolution implements Strategy {
+    // 3. Template Method
+    public void solve() {
+        start();
+        while (nextTry() && !isSolution()) {}
+        stop();
+    }
+
+    abstract void start();
+    abstract boolean nextTry();
+    abstract boolean isSolution();
+    abstract void stop();
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+class FOO extends StrategySolution {
+    private int state = 1;
+
+    protected void start() {
+        System.out.print("Start  ");
+    }
+
+    protected void stop() {
+        System.out.println("Stop");
+    }
+
+    protected boolean nextTry() {
+        System.out.print("NextTry-" + state++ + "  ");
+        return true;
+    }
+
+    protected boolean isSolution() {
+        System.out.print("IsSolution-" + (state == 3) + "  ");
+        return (state == 3);
+    }
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+// 2. Bury implementation
+abstract class StrategySearch implements Strategy {
+    // 3. Template Method
+    public void solve() {
+        while (true) {
+            preProcess();
+            if (search()) {
+                break;
+            }
+            postProcess();
+        }
+    }
+
+    abstract void preProcess();
+    abstract boolean search();
+    abstract void postProcess();
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+@SuppressWarnings("ALL")
+class BAR extends StrategySearch {
+    private int state = 1;
+
+    protected void preProcess()  {
+        System.out.print("PreProcess  ");
+    }
+
+    protected void postProcess() {
+        System.out.print("PostProcess  ");
+    }
+
+    protected boolean search() {
+        System.out.print("Search-" + state++ + "  ");
+        return state == 3 ? true : false;
+    }
+}
+```
+
++++
+
+## 实现(待续)
+
+```java
+// 4. Clients couple strictly to the interface
+public class StrategyDemo {
+    // client code here
+    private static void execute(Strategy strategy) {
+        strategy.solve();
+    }
+
+    public static void main( String[] args ) {
+        Strategy[] algorithms = {new FOO(), new BAR()};
+        for (Strategy algorithm : algorithms) {
+            execute(algorithm);
+        }
+    }
+}
+```
+
++++
+
+## 小结
+
+1. 面向接口编程、lambda等形式就是纯粹的策略模式<!-- .element: class="fragment" -->
+2. 工厂方法就是一种模板方法模式<!-- .element: class="fragment" -->
+
++++
+
+## 应用
+
+![android layout class hierarchy](http://www.itcsolutions.eu/wp-content/uploads/2011/08/Part_of__Android_View_Hierarchy.png)
 
 ---
 
@@ -2136,3 +2279,24 @@ public class MementoDemo {
 * ~~访问者模式~~
 * ~~状态模式~~
 
+---
+
+## 总结
+
++++
+
+## 目标
+
+**可读性**<!-- .element: class="fragment" --> **可扩展性**<!-- .element: class="fragment" --> **健壮性**<!-- .element: class="fragment" -->
+
++++
+
+## 原则
+
+S.O.L.I.D
+
++++
+
+## 方式
+
+**单元测试和重构**<!-- .element: class="fragment" --> **善用工具和库**<!-- .element: class="fragment" -->

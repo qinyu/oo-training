@@ -2,9 +2,6 @@ package info.qinyu.ootraining;
 
 import java.util.Collection;
 
-/**
- * Created by yqin on 4/20/17.
- */
 public class IteratorExample1 {
 
   public int sumCollection(Collection<Integer> list) {
