@@ -1989,7 +1989,7 @@ public class ObserverDemo {
 
 ## 应用
 
-![eventbus]https://raw.githubusercontent.com/greenrobot/EventBus/master/EventBus-Publish-Subscribe.png
+![eventbus](https://raw.githubusercontent.com/greenrobot/EventBus/master/EventBus-Publish-Subscribe.png)
 
 http://greenrobot.org/eventbus/
 
@@ -2270,7 +2270,8 @@ public class StrategyDemo {
 
 ## 应用
 
-![android layout class hierarchy](http://www.itcsolutions.eu/wp-content/uploads/2011/08/Part_of__Android_View_Hierarchy.png)
+<img src="http://www.itcsolutions.eu/wp-content/uploads/2011/08/Part_of__Android_View_Hierarchy.png" style="width: 450px;"/>    
+
 
 ---
 
